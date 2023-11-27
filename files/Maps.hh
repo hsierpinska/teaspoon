@@ -11,6 +11,7 @@ class Maps
 {
 private:
     std::vector<Cities> citiesList;
+    std::vector<Cities> sortedList;
     long double spaceBetween(Cities cStart, Cities cEnd); //It's a suprise tool that will help us later
     bool isRepeated(Cities city);
 public:
@@ -28,7 +29,8 @@ public:
     void addCity(Cities city);
     void fillRandomCities();
     void coutCitiesList();
-    std::vector<Cities> greedyPathFinder(unsigned int start);
+    void coutSortedList();
+    long double greedyPathFinder(unsigned int start);
 	void setVectorList(std::vector<Cities> list);
     
 

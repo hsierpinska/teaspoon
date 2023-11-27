@@ -1,15 +1,15 @@
 #include <iostream>
 #include "Maps.hh"
 int main(){
-    //Maps map(100, 100, 10); 
-    //map.fillRandomCities();
-
+    
     Maps map("readtest.txt");
-	std::vector<Cities> testVector = map.greedyPathFinder(2);
     map.coutCitiesList();
-	map.setVectorList(testVector);
-	std::cout << "\nNow after greedy path finder:\n";
-	map.coutCitiesList();
-
+	std::cout << "\nGreedy path finder:"<< map.greedyPathFinder(0)<<"\n";
+    //map.coutSortedList();
+    /*
+    Maps mapaxD(100, 100, 42);
+    mapaxD.fillRandomCities();
+    std::cout << "\nGreedy path finder:" << mapaxD.greedyPathFinder(1) << "\n";
+    */
     return 0;
 }

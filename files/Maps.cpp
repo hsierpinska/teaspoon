@@ -119,9 +119,15 @@ void Maps::coutCitiesList(){
         std::cout<<c.getName()<<"\t\tx: "<<c.getX()<<"\t\ty: "<<c.getY()<<"\n";
     }
 }
+void Maps::coutSortedList() {
+    for (auto c : sortedList) {
+        std::cout << c.getName() << "\t\tx: " << c.getX() << "\t\ty: " << c.getY() << "\n";
+    }
+}
 
-std::vector<Cities> Maps::greedyPathFinder(unsigned int start){//basically pushing start at the end and then closest one,
+long double Maps::greedyPathFinder(unsigned int start){//basically pushing start at the end and then closest one,
     //repeat closest one with ignoring that are sorted
+    long double s = 0;
     std::vector<Cities> list;//empty list to return if something is wrong and to not touch original list
     if (start < NUM_OF_CITIES) {
         if (citiesList.size() != NUM_OF_CITIES) {
@@ -142,17 +148,19 @@ std::vector<Cities> Maps::greedyPathFinder(unsigned int start){//basically pushi
 						closestDistance = d;
 					}
 				}
+                s += closestDistance;
 				list.push_back(list[closestIndex]); //push back closest one
 				list.erase(list.begin() + closestIndex); //and erase
 			}
-
-            return list;
+            s += spaceBetween(list[NUM_OF_CITIES - 1], list[0]);
+            sortedList = list;
+            return s;
         }
     }
     else {
         std::cout << "Error. City index out of range.\n";
     }
-    return list;
+    return s;
 }
 
 void Maps::setVectorList(std::vector<Cities> list) {
