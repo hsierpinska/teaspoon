@@ -8,45 +8,62 @@ Maps::Maps(unsigned int x, unsigned int y, unsigned int noc) :MAX_X(x), MAX_Y(y)
 
 }
 
+Maps::Maps(const Maps& other) {
 
-unsigned int MAX_X;
-unsigned int MAX_Y;
-unsigned int NUM_OF_CITIES;
-static Maps readMap(std::string filename, Maps &map) {
+    std::cout << "Map created out of already existing\n";
+    MAX_X = other.MAX_X;
+    MAX_Y = other.MAX_Y;
+    NUM_OF_CITIES = other.NUM_OF_CITIES;
+    citiesList = other.citiesList;
+
+}
+
+Maps& Maps::operator=(const Maps& other) {
+    std::cout << "Map copied";
+    MAX_X = other.MAX_X;
+    MAX_Y = other.MAX_Y;
+    NUM_OF_CITIES = other.NUM_OF_CITIES;
+    citiesList = other.citiesList;
+    return *this;
+}
+
+Maps::Maps(std::string filename)
+{
     std::ifstream infile(filename);
     int id, x, y, i, num_of_cities;
     int max_x = 0;
     int max_y = 0;
     std::string firstLine;
     std::getline(infile, firstLine);
-    std::cout << firstLine << std::endl;
     num_of_cities = atoi(firstLine.c_str());
 
     while (infile >> id >> x >> y)
     {
 
-        //std::cout << id << " " << x << " " << y << std::endl;
         (x > max_x) ? max_x = x : 0;
         (y > max_y) ? max_y = y : 0;
 
     }
-    std::cout << "max x: " << max_x << std::endl;
-    std::cout << "max y: " << max_y << std::endl;
+    
     infile.close();
     //ponownie trzeba przeczytaæ plik, mamy ju¿ wyznaczone max_x i max_y
+    MAX_X = max_x;
+    MAX_Y = max_y;
+    NUM_OF_CITIES = num_of_cities;
     std::ifstream infile1(filename);
-    Maps new_map(max_x, max_y, num_of_cities);
-
-    while (infile1 >> id >> x >> y)
-    {
-
+    std::getline(infile1, firstLine);
+    while (infile1 >> id >> x >> y) //pomija pierwsz¹ linijkê
+    {   
+        //std::cout << "id: " << id << " x: " << x << " y: " << y << std::endl;
         auto c = Cities(x, y, std::to_string(id));
-        new_map.addCity(c);
+        addCity(c);
 
     }
-    map = new_map;
-    
+
 }
+
+
+
 Maps::~Maps()
 {
 }

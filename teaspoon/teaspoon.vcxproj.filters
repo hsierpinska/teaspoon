@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Documents\teaspoon\Cities.hh">
+    <ClInclude Include="..\files\Cities.hh">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Documents\teaspoon\Maps.hh">
+    <ClInclude Include="..\files\Maps.hh" >
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Documents\teaspoon\Cities.cpp">
+    <ClCompile Include="..\files\Cities.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\teaspoon\Maps.cpp">
+    <ClCompile Include="..\files\Maps.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Documents\teaspoon\app.cpp">
+    <ClCompile Include="..\files\app.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>

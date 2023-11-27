@@ -127,13 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Documents\teaspoon\Cities.hh" />
-    <ClInclude Include="..\..\..\..\Documents\teaspoon\Maps.hh" />
+    <ClInclude Include="..\files\Cities.hh" />
+    <ClInclude Include="..\files\Maps.hh" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Documents\teaspoon\app.cpp" />
-    <ClCompile Include="..\..\..\..\Documents\teaspoon\Cities.cpp" />
-    <ClCompile Include="..\..\..\..\Documents\teaspoon\Maps.cpp" />
+    <ClCompile Include="..\files\app.cpp" />
+    <ClCompile Include="..\files\Cities.cpp" />
+    <ClCompile Include="..\files\Maps.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,15 +20,18 @@ public:
     unsigned int NUM_OF_CITIES;
 
     Maps(unsigned int x, unsigned int y, unsigned int noc);
-    //Maps(std::string filename);
+    Maps(const Maps& other);
+    Maps& operator=(const Maps& other);
+    Maps(std::string filename);
+
     ~Maps();
     void addCity(Cities city);
     void fillRandomCities();
     void coutCitiesList();
     std::vector<Cities> greedyPathFinder(unsigned int start);
 	void setVectorList(std::vector<Cities> list);
-    static void readMap(std::string filename, Maps &map);
-    //static void readMap(std::string filename);
+    
+
 };
 
 
