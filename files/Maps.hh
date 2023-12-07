@@ -9,16 +9,16 @@
 
 class Maps
 {
-private:
+protected:
     std::vector<Cities> citiesList;
     std::vector<Cities> sortedList;
     long double spaceBetween(Cities cStart, Cities cEnd); //It's a suprise tool that will help us later
     bool isRepeated(Cities city);
-public:
-
     unsigned int MAX_X;
     unsigned int MAX_Y;
     unsigned int NUM_OF_CITIES;
+public:
+
 
     Maps(unsigned int x, unsigned int y, unsigned int noc);
     Maps(const Maps& other);
