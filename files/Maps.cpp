@@ -30,7 +30,7 @@ Maps& Maps::operator=(const Maps& other) {
 Maps::Maps(std::string filename)
 {
     std::ifstream infile(filename);
-    int id, x, y, i, num_of_cities;
+    int id, x, y, num_of_cities;
     int max_x = 0;
     int max_y = 0;
     std::string firstLine;
@@ -175,7 +175,7 @@ void Maps::setVectorList(std::vector<Cities> list) {
 bool Maps::isRepeated(Cities city) {
     int x = city.getX();
     int y = city.getY();
-    int citiesOnMap = int(citiesList.size());
+    unsigned int citiesOnMap = int(citiesList.size());
     for (unsigned int i = 0; i < citiesOnMap; i++) {
         if (citiesList[i].getX() == x && citiesList[i].getY() == y)
             return true;

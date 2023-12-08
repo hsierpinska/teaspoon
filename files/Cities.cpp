@@ -12,6 +12,15 @@ Cities::~Cities()
 {
 }
 
+bool Cities::operator==(const Cities& rhs) {
+    if (this->name == rhs.name && this->x == rhs.x && this->y == rhs.y) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 unsigned int Cities::getX(){
     return x;
 }

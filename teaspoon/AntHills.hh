@@ -5,12 +5,11 @@ class AntHills :
     public Maps
 {
 private:
-    std::vector<std::vector<float>> pheromonesMatrix;
-    std::vector<std::vector<float>> distanceMatrix;
+    std::vector<std::vector<long double>> pheromonesMatrix;
+    std::vector<std::vector<long double>> distanceMatrix;
     unsigned int iteration;
     unsigned int bestIteration;
-    float distance;
-    float bestDistance;
+    long double bestDistance;
     std::vector<Cities> path;
     std::vector<Cities> bestPath;
 
@@ -18,7 +17,7 @@ public:
     AntHills(std::string filename);
     void thePathFinder(unsigned int start);
     unsigned int getBestIteration();
-    float getBestDistance();
+    long double getBestDistance();
     std::vector<Cities> getBestPath();
 
 };

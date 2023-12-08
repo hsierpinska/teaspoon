@@ -16,5 +16,6 @@ public:
     void setY(unsigned int _y);
     void setName(std::string _name);
     std::string getName();
+    bool operator==(const Cities& rhs);
 
 };

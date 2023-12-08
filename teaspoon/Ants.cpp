@@ -1,5 +1,5 @@
 #include "Ants.hh"
-#define Q 200 //const that is needed to calculate how much pheromones ant left
+#define Q 8 //const that is needed to calculate how much pheromones ant left
 Ants::Ants(float _a, float _b) {
 	a = _a;
 	b = _b;
@@ -23,7 +23,7 @@ float Ants::getB() {
 	return b;
 }
 
-float Ants::getDistanceTravelled() {
+long double Ants::getDistanceTravelled() {
 	return distanceTravelled;
 }
 
@@ -31,11 +31,11 @@ std::vector<Cities> Ants::getPathTravelled() {
 	return pathTravelled;
 }
 
-float Ants::getPheromonesLeft() {
+long double Ants::getPheromonesLeft() {
 	return pheromonesLeft;
 }
 
-void Ants::pathFinder(std::vector<std::vector<float>> &pheromonesMatrix, std::vector<std::vector<float>> &distanceMatrix, unsigned int start, std::vector<Cities> &citiesList) {
+void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, std::vector<std::vector<long double>> &distanceMatrix, unsigned int start, std::vector<Cities> &citiesList) {
 	// blah blah blah
 	// ant will look for path
 	// remembering path
@@ -44,15 +44,51 @@ void Ants::pathFinder(std::vector<std::vector<float>> &pheromonesMatrix, std::ve
 	// 
 	Cities city = citiesList[start];
 	pathTravelled.push_back(city);
-	double probability;
-	for (int x = 0; x < pheromonesMatrix[0].size(); x++) { //idk if matrix should be with pointer * or not
+	int lCity = start; //last visited city
 
+	std::vector<Cities> tmp_cities;
+	std::vector<double> tmp_prob;
+	long double probability;
+
+	//std::default_random_engine generator(unsigned int(time(NULL)));//random number generator
+	//std::uniform_int_distribution<long double> distribution(0,1);
+	long double tmp_rand;
+	int i;
+
+	distanceTravelled = 0;
+	for (int x = 0; x < pheromonesMatrix[0].size(); x++) { //idk if matrix should be with pointer * or not
+		tmp_cities = {};
+		tmp_prob = {};
+		probability = 0;
+		for (int y = 0; y < pheromonesMatrix[0].size(); y++){
+			if (std::find(pathTravelled.begin(), pathTravelled.end(), citiesList[y]) != pathTravelled.end()) {//if city wasnt already visited
+				probability += pheromonesMatrix[lCity][y] * distanceMatrix[lCity][y];//sum of every path 
+			}
+		}
+		for (int y = 0; y < pheromonesMatrix[0].size(); y++) {
+			if (std::find(pathTravelled.begin(), pathTravelled.end(), citiesList[y]) != pathTravelled.end()) {//if city wasnt already visited
+				tmp_prob.push_back((pow(pheromonesMatrix[lCity][y],a) * pow(distanceMatrix[lCity][y],b)) / probability);
+				tmp_cities.push_back(citiesList[y]);//list of cities we choose from
+			}
+		}
+		tmp_rand = static_cast <long double> (rand()) / static_cast <long double> (1);;
+		i = 0;
+		while (tmp_rand - tmp_prob[i]>0) {//geting random path, sum of all floats in tmp_prob should be equal 1
+			i++;
+		}
+		if (i >= tmp_prob.size()) {//in case sum of floats are not equal 1 but 1.00001 or 0.99999 or smth and tmp_rand is 1
+			i--;
+		}
+		pathTravelled.push_back(tmp_cities[i]);
+		distanceTravelled += distanceMatrix[lCity].at(std::find(citiesList.begin(), citiesList.end(), tmp_cities[i])-citiesList.begin());
 	}
+	//how much ant left pheromones?
+	pheromonesLeft = (long double) Q / distanceTravelled;
 }
 bool Ants::isCityNeibourOnPath(Cities cityI, Cities cityJ) {
 	for (int i = 0; i < pathTravelled.size()-1; i++) {
-		if ((pathTravelled[i].getName() == cityI.getName() && pathTravelled[i + 1].getName() == cityJ.getName()) ||
-			(pathTravelled[i + 1].getName() == cityI.getName() && pathTravelled[i].getName() == cityJ.getName()))//if they're neibours
+		if ((pathTravelled[i] == cityI && pathTravelled[i + 1] == cityJ) ||
+			(pathTravelled[i + 1] == cityI && pathTravelled[i] == cityJ))//if they're neibours
 		{
 			return true;
 		}
