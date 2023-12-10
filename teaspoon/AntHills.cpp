@@ -1,12 +1,11 @@
 #include "AntHills.hh"
-#define START_PHEROMONES 0.4f
-#define ITERATIONS 50
-#define ANT_QUANTITY 52
-#define P_E 0.5f // PHEROMON_EVAPORATION in range (0,1) 
+#define START_PHEROMONES 0.2f
+#define ITERATIONS 100
+#define ANT_QUANTITY 29
+#define P_E 0.1f // PHEROMON_EVAPORATION in range (0,1) 
 AntHills::AntHills(std::string filename) : Maps(filename) {
     bestDistance = 0;
     for (unsigned int x = 0; x < NUM_OF_CITIES; x++) {//filling matrix with basic values
-        path.push_back(citiesList[x]);
         bestPath.push_back(citiesList[x]);
         pheromonesMatrix.push_back({});
         distanceMatrix.push_back({});
@@ -29,17 +28,25 @@ void AntHills::thePathFinder(unsigned int start) {
     std::vector<Ants> ants;//vector of ants we'll be using
     long double tmp;
     long double pheromones;
+    unsigned int tmp_start;
     for (int i = 0; i < ANT_QUANTITY; i++) {//pushing here vector of ants
-        ants.push_back(Ants(2, 1));
+        ants.push_back(Ants(1.2, 1));
     }
     for (unsigned int i = 0; i < ITERATIONS; i++) {//iteration
         for (unsigned int a = 0; a < ANT_QUANTITY; a++) {//ant
-            ants[a].pathFinder(pheromonesMatrix, distanceMatrix, a, citiesList);
+            tmp_start = a;
+            while (tmp_start >= NUM_OF_CITIES) {
+                tmp_start -= NUM_OF_CITIES;
+            }
+            
+            ants[a].pathFinder(pheromonesMatrix, distanceMatrix, tmp_start, citiesList);
+            
             if ((tmp = ants[a].getDistanceTravelled()) < bestDistance) {
                 bestDistance = tmp;
                 bestIteration = iteration;
                 bestPath = ants[a].getPathTravelled();
             }
+            std::cout << i << " " << tmp << std::endl;
         }
         //let's update pheromones matrix
         for (unsigned int x = 0; x < NUM_OF_CITIES; x++) {

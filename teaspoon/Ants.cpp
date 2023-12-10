@@ -1,5 +1,5 @@
 #include "Ants.hh"
-#define Q 200 //const that is needed to calculate how much pheromones ant left
+#define Q 30 //const that is needed to calculate how much pheromones ant left
 Ants::Ants(float _a, float _b) {
 	a = _a;
 	b = _b;
@@ -83,10 +83,10 @@ void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, s
 		//	i--;
 		//}
 		pathTravelled.push_back(tmp_cities[i]);
-		distanceTravelled += distanceMatrix[lCity].at(
-			std::find(citiesList.begin(),
-			citiesList.end(),
-			tmp_cities[i])-citiesList.begin());
+		distanceTravelled += distanceMatrix[lCity]
+			[
+				std::find(citiesList.begin(), citiesList.end(), tmp_cities[i]) - citiesList.begin()
+			];
 		lCity = std::find(citiesList.begin(),citiesList.end(),tmp_cities[i]) - citiesList.begin();//remembering index of last city
 	}
 	distanceTravelled += distanceMatrix[lCity][start]; //+ distance from last to 

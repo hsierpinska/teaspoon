@@ -10,7 +10,6 @@ private:
     unsigned int iteration;
     unsigned int bestIteration;
     long double bestDistance;
-    std::vector<Cities> path;
     std::vector<Cities> bestPath;
 
 public:
