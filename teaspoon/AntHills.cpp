@@ -1,7 +1,7 @@
 #include "AntHills.hh"
 #define START_PHEROMONES 0.4f
 #define ITERATIONS 50
-#define ANT_QUANTITY 10
+#define ANT_QUANTITY 52
 #define P_E 0.5f // PHEROMON_EVAPORATION in range (0,1) 
 AntHills::AntHills(std::string filename) : Maps(filename) {
     bestDistance = 0;
@@ -15,9 +15,10 @@ AntHills::AntHills(std::string filename) : Maps(filename) {
             distanceMatrix[x].push_back(spaceBetween(citiesList[x],citiesList[y]));//filling matrix with distances between all cities so we dont have to it later
         }
     }
-    for (unsigned int y = 0; y < NUM_OF_CITIES; y++) {
-        bestDistance += distanceMatrix[0][y];//filling with first distance we can get since we dont know what worst option could be
+    for (unsigned int y = 0; y < NUM_OF_CITIES-1; y++) {
+        bestDistance += distanceMatrix[y][y+1];//filling with first distance we can get since we dont know what worst option could be
     }
+    bestDistance += distanceMatrix[0][NUM_OF_CITIES - 1];
     iteration = 0;
     bestIteration = 0;
 }
@@ -29,7 +30,7 @@ void AntHills::thePathFinder(unsigned int start) {
     long double tmp;
     long double pheromones;
     for (int i = 0; i < ANT_QUANTITY; i++) {//pushing here vector of ants
-        ants.push_back(Ants(1, 1));
+        ants.push_back(Ants(2, 1));
     }
     for (unsigned int i = 0; i < ITERATIONS; i++) {//iteration
         for (unsigned int a = 0; a < ANT_QUANTITY; a++) {//ant
