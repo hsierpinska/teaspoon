@@ -5,16 +5,18 @@
 #define P_E 0.5f // PHEROMON_EVAPORATION in range (0,1) 
 AntHills::AntHills(std::string filename) : Maps(filename) {
     bestDistance = 0;
-    for (unsigned int y = 0; y < NUM_OF_CITIES; y++) {
-            bestDistance += distanceMatrix[0][y];//filling with first distance we can get since we dont know what worst option could be
-    }
     for (unsigned int x = 0; x < NUM_OF_CITIES; x++) {//filling matrix with basic values
         path.push_back(citiesList[x]);
         bestPath.push_back(citiesList[x]);
+        pheromonesMatrix.push_back({});
+        distanceMatrix.push_back({});
         for (unsigned int y = 0; y < NUM_OF_CITIES; y++) {
             pheromonesMatrix[x].push_back(START_PHEROMONES);
             distanceMatrix[x].push_back(spaceBetween(citiesList[x],citiesList[y]));//filling matrix with distances between all cities so we dont have to it later
         }
+    }
+    for (unsigned int y = 0; y < NUM_OF_CITIES; y++) {
+        bestDistance += distanceMatrix[0][y];//filling with first distance we can get since we dont know what worst option could be
     }
     iteration = 0;
     bestIteration = 0;

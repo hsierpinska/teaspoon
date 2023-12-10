@@ -18,6 +18,6 @@ int main(){
     AntHills test("test.txt");
     test.thePathFinder(1);
     std::cout << "Ant distance: "<< test.getBestDistance() <<std::endl;
-    std::cout << "Greedy distance: " << test.greedyPathFinder(1) << std::endl;
+    //std::cout << "Greedy distance: " << test.greedyPathFinder(1) << std::endl;
     return 0;
 }
