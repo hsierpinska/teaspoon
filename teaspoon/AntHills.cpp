@@ -3,6 +3,9 @@
 #define ITERATIONS 100
 #define ANT_QUANTITY 29
 #define P_E 0.1f // PHEROMON_EVAPORATION in range (0,1) 
+#define ALPHA 1
+#define BETA 1
+
 AntHills::AntHills(std::string filename) : Maps(filename) {
     bestDistance = 0;
     for (unsigned int x = 0; x < NUM_OF_CITIES; x++) {//filling matrix with basic values
@@ -30,7 +33,7 @@ void AntHills::thePathFinder(unsigned int start) {
     long double pheromones;
     unsigned int tmp_start;
     for (int i = 0; i < ANT_QUANTITY; i++) {//pushing here vector of ants
-        ants.push_back(Ants(1.2, 1));
+        ants.push_back(Ants(ALPHA, BETA));
     }
     for (unsigned int i = 0; i < ITERATIONS; i++) {//iteration
         for (unsigned int a = 0; a < ANT_QUANTITY; a++) {//ant
@@ -46,7 +49,7 @@ void AntHills::thePathFinder(unsigned int start) {
                 bestIteration = iteration;
                 bestPath = ants[a].getPathTravelled();
             }
-            std::cout << i << " " << tmp << std::endl;
+            std::cout << i << " " << tmp << std::endl; //printing what outcome we have
         }
         //let's update pheromones matrix
         for (unsigned int x = 0; x < NUM_OF_CITIES; x++) {
