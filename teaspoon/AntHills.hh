@@ -1,6 +1,6 @@
 #pragma once
 #include "../files/Maps.hh"
-#include "Ants.hh"
+
 class AntHills :
     public Maps
 {

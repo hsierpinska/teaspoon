@@ -8,7 +8,7 @@
 
 class Ants
 {
-private:
+protected:
 	float a; //alpha
 	float b; //beta
 	long double distanceTravelled; //distance travelled in one iteration, we dont want setters, we will set values ONLY in pathFinder
@@ -23,7 +23,7 @@ public:
 	long double getDistanceTravelled();
 	std::vector<Cities> getPathTravelled();
 	long double getPheromonesLeft();
-	void pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, std::vector<std::vector<long double>> &distanceMatrix, unsigned int start, std::vector<Cities> &citiesList); //mmm stinky, do you know da wae? 
+	void pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, std::vector<std::vector<long double>> &distanceMatrix, unsigned int start, std::vector<Cities> &citiesList, unsigned int iteration); //mmm stinky, do you know da wae? 
 	bool isCityNeibourOnPath(Cities cityI, Cities cityJ);
 };
 

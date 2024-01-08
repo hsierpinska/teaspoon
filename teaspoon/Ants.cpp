@@ -1,5 +1,5 @@
 #include "Ants.hh"
-#define Q 30 //const that is needed to calculate how much pheromones ant left
+#define Q 500 //const that is needed to calculate how much pheromones ant left
 Ants::Ants(float _a, float _b) {
 	a = _a;
 	b = _b;
@@ -35,7 +35,7 @@ long double Ants::getPheromonesLeft() {
 	return pheromonesLeft;
 }
 
-void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, std::vector<std::vector<long double>> &distanceMatrix, unsigned int start, std::vector<Cities> &citiesList) {
+void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, std::vector<std::vector<long double>> &distanceMatrix, unsigned int start, std::vector<Cities> &citiesList, unsigned int iteration) {
 	// blah blah blah
 	// ant will look for path
 	// remembering path
@@ -53,12 +53,12 @@ void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, s
 
 
 	std::uniform_real_distribution<double> unif(0,1);
-	std::default_random_engine re;
+	std::default_random_engine re(time(0));
 	long double tmp_rand;
 	int i;
 
 	distanceTravelled = 0;
-	for (int x = 0; x < pheromonesMatrix[0].size()-1; x++) { 
+	for (int x = 0; x < pheromonesMatrix[0].size()-1; x++) { //-1 because start city is already there
 		tmp_cities = {};
 		tmp_prob = {};
 		probability = 0;
@@ -75,13 +75,25 @@ void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, s
 		}
 		
 		tmp_rand = unif(re);
+		tmp_rand = 0.99999;
 		i = 0;
-		while ((tmp_rand -= tmp_prob[i])>0) {//geting random path, sum of all floats in tmp_prob should be equal 1
-			i++;
+		int ib = 0;
+		if (i > 20) {
+			while ((tmp_rand -= (tmp_prob[i])) > 0) {//geting random path, sum of all floats in tmp_prob should be equal 1
+				
+				i++;
+			}
 		}
-		//if (i >= tmp_prob.size()) {//in case sum of floats are not equal 1 but 1.00001 or 0.99999 or smth and tmp_rand is 1
-		//	i--;
-		//}
+		else {
+			while ((tmp_rand -= (tmp_prob[i])) > 0) {//learning first 20 iterations
+				
+				if (tmp_prob[i] < tmp_prob[ib]) {
+					ib = i;
+				}
+				i++;
+			}
+			i = ib;
+		}
 		pathTravelled.push_back(tmp_cities[i]);
 		distanceTravelled += distanceMatrix[lCity]
 			[
@@ -89,7 +101,7 @@ void Ants::pathFinder(std::vector<std::vector<long double>> &pheromonesMatrix, s
 			];
 		lCity = std::find(citiesList.begin(),citiesList.end(),tmp_cities[i]) - citiesList.begin();//remembering index of last city
 	}
-	distanceTravelled += distanceMatrix[lCity][start]; //+ distance from last to 
+	distanceTravelled += distanceMatrix[lCity][start]; //+ distance from last to first
 	//how much ant left pheromones?
 	pheromonesLeft = (long double) Q / distanceTravelled;
 }
